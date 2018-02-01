@@ -1,0 +1,37 @@
+#!/usr/bin/env python
+import time
+import subprocess
+import signal
+
+proc1 = subprocess.Popen(['roslaunch', 'ur_control', 'ur10_control.launch'])
+#os.('roslaunch ur_control ur10_control.launch')
+time.sleep(5)
+
+proc2 = subprocess.Popen(['roslaunch', 'realsense_camera', 'sr300_nodelet_rgbd.launch'])
+#os.system('roslaunch realsense_camera sr300_nodelet_rgbd.launch')
+time.sleep(5)
+
+proc3 = subprocess.Popen(['rosrun', 'tf', 'static_transform_publisher', '-0.914094', '-0.074268', '0.330352', '0.086377', '-0.223497', '-0.336740', '-0.910601', '/base_link', '/camera_link', '40'])
+#os.system('rosrun tf static_transform_publisher -0.914094  -0.074268  0.330352  0.086377  -0.223497  -0.336740  -0.910601    /base_link /camera_link 40')
+time.sleep(3)
+
+proc4 = subprocess.Popen(['rosrun', 'sh_ctrl', 'tool0_position_pub.py'])
+time.sleep(2)
+
+proc5 = subprocess.Popen(['rosrun', 'ur_modern_driver', 'test_gripper'])
+time.sleep(2)
+
+proc6 = subprocess.Popen(['rosrun', 'sh_ctrl', 'serial_receiver'])
+time.sleep(2)
+
+print('All the nodes have been running!')
+
+s = input()
+if s == 10:
+  proc1.kill()
+  proc2.kill()
+  proc3.kill()
+  proc4.kill()
+  proc5.kill()
+  proc6.kill()
+

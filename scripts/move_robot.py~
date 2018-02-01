@@ -1,0 +1,13 @@
+#!/usr/bin/env python
+import time
+import os
+
+os.sys('rosbag record -o trajectory /tool0_position')
+time.sleep(2)
+os.sys('rosrun sh_ctrl serial_receiver')
+time.sleep(2)
+os.sys('rosrun sh_ctrl robot_rot.py')
+time.sleep(2)
+os.sys('rosrun sh_ctrl robot_trans.py')
+time.sleep(2)
+os.sys('rosrun sh_ctrl teleop_BCI.py')

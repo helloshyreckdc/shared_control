@@ -1,5 +1,6 @@
 #include "ros/ros.h"
 #include "std_msgs/Char.h"
+#include "std_msgs/String.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -16,7 +17,7 @@
 
 int ret;
 int serial_fd;
-char read_buf[50];
+char read_buf[3];
 int seriallen=4;  //serial data length
 
 std_msgs::Char msg;
@@ -45,6 +46,7 @@ int main(int argc, char **argv)
              msg.data = read_buf[0];
           }
 
+          ROS_INFO("%c", msg.data);
           cmd_pub.publish(msg);
           loop_rate.sleep();
 	}
